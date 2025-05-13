@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OsnabrückHalle - Digitaler Anfragepilot</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Digitaler Anfragepilot für Veranstaltungen in der OsnabrückHalle">
+</head>
+<body>
+  <div class="inquiry-container">
+    <header>
+      <h1>Digitaler Anfragepilot der OsnabrückHalle</h1>
+      <p>Für Veranstaltungen in unserem Event- und Kongresszentrum</p>
+    </header>
+    
+    <div class="chat-container">
+      <div id="messages">
+        <!-- Erste Nachricht mit Avatar -->
+        <div class="message-with-avatar">
+          <div class="avatar">
+            <img src="img/bot-avatar.png" alt="Assistent">
+          </div>
+          <div class="message claude">
+            Willkommen beim digitalen Anfragepiloten! Wie kann ich Ihnen bei der Planung Ihrer Veranstaltung helfen?
+          </div>
+        </div>
+      </div>
+      
+      <form id="chat-form">
+        <textarea id="user-input" placeholder="Ihre Nachricht..." rows="1"></textarea>
+        <button type="submit">Senden</button>
+      </form>
+    </div>
+  </div>
+  
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Claude Chatbot
+
+## Setup
+
+1. **Backend**
+   - `cd backend`
+   - `npm install`
+   - Rename `.env.example` to `.env` and set `CLAUDE_API_KEY`
+   - `npm start`
+
+2. **Frontend**
+   - Serve `frontend/` directory (e.g., via `npx serve frontend`)
+   - Open in browser at `http://localhost:5000` (or whichever port)
+
+3. **Chat**
+   - Type a message and hit Send to chat with Claude!
