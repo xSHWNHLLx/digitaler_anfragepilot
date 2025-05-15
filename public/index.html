@@ -22,8 +22,11 @@
           <div class="avatar">
             <img src="img/bot-avatar.png" alt="Assistent">
           </div>
-          <div class="message claude">
-            Willkommen beim digitalen Anfragepiloten! Wie kann ich Ihnen bei der Planung Ihrer Veranstaltung helfen?
+          <div class="bot-message-content">
+            <div class="bot-name">KIsela EVEnt - Ihr digitaler Anfragepilot</div>
+            <div class="message claude">
+              Willkommen beim digitalen Anfragepiloten! Wie kann ich Ihnen bei der Planung Ihrer Veranstaltung helfen?
+            </div>
           </div>
         </div>
       </div>
@@ -36,5 +39,26 @@
   </div>
   
   <script type="module" src="js/app.js"></script>
+  <script src="js/debugUI.js"></script>
+  
+  <style>
+    /* Optimierte Style-Überschreibungen - weniger aggressiv */
+    .message.claude,
+    .bot-message-content .message, 
+    .message-with-avatar:not(.user-message) .message {
+      background-color: #f2f2f2;
+      border-left: 3px solid #3DAE2B;
+    }
+    
+    /* Benutzer-Nachrichten */
+    .message.user {
+      background-color: #e8f5e6;
+    }
+    
+    /* Debug-Hilfe */
+    .debug-highlight {
+      outline: 1px dotted red;
+    }
+  </style>
 </body>
 </html>

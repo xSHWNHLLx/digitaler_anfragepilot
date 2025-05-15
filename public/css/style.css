@@ -1,18 +1,18 @@
 :root {
-  --primary-color: #3a5eb9;
-  --secondary-color: #5c85d6;
-  --accent-color: #0f294d;
-  --background-color: #f5f7fa;
+  --primary-color: #3DAE2B;       /* Hauptgrün / CI-Grün */
+  --secondary-color: #4AC235;     /* Helleres Grün */
+  --accent-color: #2A7A1E;        /* Dunkleres Grün */
+  --background-color: #ffffff;    /* Weiß als Hintergrund */
   --chat-bg: #ffffff;
-  --user-message: #e3effd;
-  --assistant-message: #f0f2f5;
+  --user-message: #e8f5e6;        /* Sehr helles Grün für User-Nachrichten */
+  --assistant-message: #f2f2f2;   /* Geändert zu Grau für klare Unterscheidung */
   --text-color: #333333;
   --light-text: #666666;
-  --highlight-color: #ffeb3b;
-  --success-color: #4caf50;
+  --highlight-color: #4AC235;     /* Helleres Grün für Highlights */
+  --success-color: #3DAE2B;       /* CI-Grün als Erfolgsfarbe */
   
   /* Neue Variablen für verbesserte Anpassbarkeit */
-  --avatar-size: 36px;
+  --avatar-size: 32px; /* Slightly smaller avatar size */
   --avatar-border-radius: 50%;
   --avatar-border-color: #e0e0e0;
   --avatar-border-width: 2px;
@@ -20,7 +20,7 @@
   --message-border-radius: 12px;
   --message-shadow: 0 2px 5px rgba(0,0,0,0.05);
   --animation-speed: 0.3s;
-  --typing-indicator-color: var(--primary-color);
+  --typing-indicator-color: var(--primary-color); /* Now using CI-Grün */
   --chat-font-size: 1rem;
   --header-font-size: 1.8rem;
 }
@@ -119,16 +119,19 @@ header p {
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.message.claude {
-  background: var(--assistant-message);
+.message.claude,
+.bot-message-content .message,
+.message-with-avatar:not(.user-message) .message {
+  background-color: #f2f2f2 !important; /* Direkte Farbzuweisung statt Variable */
   align-self: flex-start;
   border-bottom-left-radius: 4px;
+  border-left: 3px solid #e0e0e0; /* Graue Leiste am linken Rand für visuellen Unterschied */
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .message.preemptive {
   background-color: #f8f9fa;
-  border-left: 3px solid var(--primary-color);
+  border-left: 3px solid var(--primary-color); /* Already using CI-Grün via the variable */
 }
 
 .message strong {
@@ -173,7 +176,7 @@ header p {
 
 #user-input:focus {
   border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px rgba(58, 94, 185, 0.2);
+  box-shadow: 0 0 0 2px rgba(61, 174, 43, 0.2); /* Updated to match CI-Grün with opacity */
 }
 
 #chat-form button {
@@ -288,11 +291,148 @@ header p {
   transform: scale(1.1);
 }
 
+#reset-button {
+  position: fixed;
+  bottom: 20px;
+  right: 80px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(42, 122, 30, 0.8); /* Dunkleres Grün mit Transparenz */
+  color: white;
+  font-size: 20px;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#reset-button:hover {
+  background-color: #2A7A1E; /* Dunkleres Grün bei Hover */
+  transform: scale(1.1);
+}
+
+.session-note {
+  text-align: center;
+  color: var(--light-text);
+  font-size: 0.8rem;
+  padding: 5px;
+  margin: 5px 0 15px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  opacity: 0.8;
+  animation: fadeOut 5s forwards;
+  animation-delay: 3s;
+}
+
+/* Hilfe-Popup Styles */
+.help-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.help-popup {
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  position: relative;
+  padding: 20px;
+}
+
+.help-popup h2 {
+  color: var(--primary-color);
+  margin-top: 0;
+}
+
+.help-popup .section {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.help-popup .section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.help-popup .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--primary-color);
+}
+
+@keyframes fadeOut {
+  from { opacity: 0.8; }
+  to { opacity: 0; }
+}
+
+.status-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 8px 15px;
+  border-radius: 20px;
+  color: white;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: opacity 2s ease-out; /* Slower transition for better visibility */
+  z-index: 3000;
+  pointer-events: none; /* Make sure it doesn't interfere with clicking */
+}
+
+.status-indicator.new-session {
+  background-color: var(--primary-color);
+  opacity: 0;
+}
+
+.status-indicator.restored-session {
+  background-color: var(--success-color);
+  color: white;
+  opacity: 1;
+  z-index: 2999; /* Ensure it's on top of other elements */
+  border: 1px solid #2a7a1e; /* Darker border for better visibility */
+  font-weight: 500; /* Slightly bolder text */
+}
+
+.status-indicator.fade-out {
+  opacity: 0;
+  transition: opacity 2s ease-out;
+}
+
 .loading-indicator {
   display: flex;
   align-self: flex-start;
   padding: 10px;
   gap: 4px;
+}
+
+/* Typing indicator styling for the updated layout */
+#typing-indicator {
+  display: flex;
+  padding: 10px;
+  gap: 4px;
+  margin-top: 0;
 }
 
 .loading-indicator .dot {
@@ -370,6 +510,19 @@ header p {
     padding: 0.8rem 1rem;
   }
   
+  .bot-message-content {
+    max-width: calc(90% - var(--avatar-size) - 10px);
+  }
+  
+  .message-with-avatar .avatar {
+    margin-top: 16px; /* Adjusted spacing on mobile */
+  }
+  
+  .bot-name {
+    font-size: 0.75rem;
+    margin-bottom: 2px;
+  }
+  
   #chat-form button {
     padding: 0.8rem 1.2rem;
   }
@@ -408,20 +561,59 @@ header p {
   font-style: italic;
 }
 
+/* Right-aligned timestamps for bot messages */
+.message.claude .timestamp,
+#preemptive-response .timestamp,
+.bot-message-content .message .timestamp {
+  display: block;
+  text-align: right;
+  margin-top: 4px;
+  margin-left: 0;
+  margin-bottom: -2px; /* Prevent extra space at bottom */
+  padding-left: 8px; /* Add padding to separate from text */
+  clear: both; /* Make sure it's below any text */
+}
+
+/* Bot name styling */
+.bot-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 2px;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* Avatar Styling und Nachrichten-Layout mit Avatar */
 .message-with-avatar {
   display: flex;
   gap: 10px;
   margin-bottom: var(--message-spacing);
+  align-items: flex-start; /* Align at the top for multi-line messages */
+}
+
+/* For bot messages, we want to vertically center the avatar with its message */
+.message-with-avatar .avatar {
+  margin-top: 18px; /* Position to align with the middle of the message, accounting for the bot name */
+}
+
+/* User messages need different handling */
+.message-with-avatar.user-message .avatar {
+  margin-top: 0; /* Reset for user messages that don't have a name label */
 }
 
 .avatar {
   width: var(--avatar-size);
   height: var(--avatar-size);
   border-radius: 50%;
-  border: 2px solid #e0e0e0;
+  border: 2px solid var(--accent-color); /* Updated to dunkleres Grün */
   overflow: hidden;
   flex-shrink: 0;
+  max-width: 36px; /* Explicit max size to prevent growth */
+  max-height: 36px;
+  align-self: flex-start; /* Ensure alignment starts from the top */
 }
 
 .avatar img {
@@ -432,7 +624,16 @@ header p {
 
 /* Verbesserte Nachrichtenstile mit Avatar-Unterstützung */
 .message-with-avatar .message {
+  max-width: 100%;
+}
+
+.bot-message-content {
+  display: flex;
+  flex-direction: column;
   max-width: calc(85% - var(--avatar-size) - 10px);
+  flex-grow: 1;
+  padding-top: 0; /* Remove any top padding */
+  min-height: 42px; /* Ensure there's enough height for avatar alignment */
 }
 
 /* Anpassbarer Chat-Header für Themen und Customization */
@@ -603,7 +804,7 @@ header p {
 
 .theme-option.selected {
   border-color: var(--primary-color);
-  background-color: rgba(58, 94, 185, 0.05);
+  background-color: rgba(61, 174, 43, 0.05); /* Updated to match CI-Grün with opacity */
 }
 
 .theme-preview {
@@ -618,21 +819,21 @@ header p {
 .dark-mode {
   --background-color: #1c1c1c;
   --chat-bg: #2d2d2d;
-  --user-message: #374866;
-  --assistant-message: #3a3a3a;
+  --user-message: #2A7A1E;         /* Dunkleres Grün für User-Nachrichten im Dunkelmodus */
+  --assistant-message: #27341f;    /* Sehr dunkles Grün für Assistant-Nachrichten */
   --text-color: #e0e0e0;
   --light-text: #b0b0b0;
-  --avatar-border-color: #4d4d4d;
+  --avatar-border-color: #3DAE2B;  /* CI-Grün für Avatar-Rahmen */
 }
 
 @media (prefers-color-scheme: dark) {
   .auto-theme {
     --background-color: #1c1c1c;
     --chat-bg: #2d2d2d;
-    --user-message: #374866;
-    --assistant-message: #3a3a3a;
+    --user-message: #2A7A1E;         /* Dunkleres Grün für User-Nachrichten im Dunkelmodus */
+    --assistant-message: #27341f;    /* Sehr dunkles Grün für Assistant-Nachrichten */
     --text-color: #e0e0e0;
     --light-text: #b0b0b0;
-    --avatar-border-color: #4d4d4d;
+    --avatar-border-color: #3DAE2B;  /* CI-Grün für Avatar-Rahmen */
   }
 }

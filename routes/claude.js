@@ -533,7 +533,7 @@ async function extractAndProcessInBackground(internalMessages, hasContactInfo, s
     
     if (jsonStartPos === -1 || jsonEndPos === -1 || jsonEndPos <= jsonStartPos) {
       console.warn('⚠️ Kein gültiges JSON im Extraktionstext gefunden');
-      return; // Keine weitere Verarbeitung, Antwort wurde bereits gesendet
+      return { success: false, reason: 'invalid_json' }; // Keine weitere Verarbeitung, Antwort wurde bereits gesendet
     }
     
     const jsonText = extractText.substring(jsonStartPos, jsonEndPos + 1);
