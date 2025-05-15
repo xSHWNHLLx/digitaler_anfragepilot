@@ -1,7 +1,39 @@
 // Fester Pfad für den Bot-Avatar
 const botAvatarPath = 'img/bot-avatar.png';
 
-export function appendMessage(text, sender, options = null) {
+export function formatMessageText(text) {
+  // Hervorhebungen (Fett) für wichtige Hinweise
+  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  
+  // Zeilenumbrüche zu <br>
+  text = text.replace(/\n/g, '<br>');
+  
+  // Listen-Formatierung (Aufzählungspunkte mit Bindestrichen)
+  let inList = false;
+  const lines = text.split('<br>');
+  
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim().startsWith('- ')) {
+      if (!inList) {
+        lines[i] = '<ul><li>' + lines[i].substring(2) + '</li>';
+        inList = true;
+      } else {
+        lines[i] = '<li>' + lines[i].substring(2) + '</li>';
+      }
+    } else if (inList) {
+      lines[i - 1] += '</ul>';
+      inList = false;
+    }
+  }
+  
+  if (inList) {
+    lines[lines.length - 1] += '</ul>';
+  }
+  
+  return lines.join('<br>');
+}
+
+export function appendMessage(text, sender, options = null, animate = true) {
   const container = document.getElementById('messages');
   const msgWrapperEl = document.createElement('div');
   msgWrapperEl.classList.add('message-with-avatar');
@@ -11,24 +43,55 @@ export function appendMessage(text, sender, options = null) {
   avatarEl.classList.add('avatar');
   
   const msgEl = document.createElement('div');
-  msgEl.classList.add('message', sender);
+  msgEl.classList.add('message');
+  
+  // Stellen Sie sicher, dass Claude-Nachrichten immer die richtige Klasse haben
+  if (sender === 'claude') {
+    msgEl.classList.add('claude');
+    // Einfachere Style-Anwendung, ohne !important
+    msgEl.style.backgroundColor = '#f2f2f2';
+    msgEl.style.borderLeft = '3px solid #3DAE2B';
+  } else {
+    msgEl.classList.add(sender);
+  }
   
   // Avatar je nach Sender hinzufügen
   if (sender === 'claude') {
+    // Bot name element
+    const botNameEl = document.createElement('div');
+    botNameEl.classList.add('bot-name');
+    botNameEl.textContent = 'KIsela EVEnt - Ihr digitaler Anfragepilot';
+    
     const avatarImg = document.createElement('img');
     avatarImg.src = botAvatarPath;
     avatarImg.alt = "Assistent";
     avatarEl.appendChild(avatarImg);
+    
+    // First add avatar
     msgWrapperEl.appendChild(avatarEl);
+    
+    // Create a wrapper div for the bot name and message
+    const contentWrapperEl = document.createElement('div');
+    contentWrapperEl.classList.add('bot-message-content');
+    contentWrapperEl.appendChild(botNameEl);
+    contentWrapperEl.appendChild(msgEl);
+    msgWrapperEl.appendChild(contentWrapperEl);
+    
+    // We don't call msgWrapperEl.appendChild(msgEl) here because we've already added it to contentWrapperEl
+    return addMessageToContainer(container, msgWrapperEl, text, msgEl, sender, options, animate);
   } else {
     // Für Benutzer entweder kein Avatar oder optional ein Benutzer-Avatar
     msgWrapperEl.classList.add('user-message');
     // Umgekehrte Reihenfolge für Benutzer-Nachrichten (rechts ausgerichtet)
     msgWrapperEl.style.flexDirection = 'row-reverse';
+    msgWrapperEl.appendChild(msgEl);
+    
+    return addMessageToContainer(container, msgWrapperEl, text, msgEl, sender, options, animate);
   }
-  
-  msgWrapperEl.appendChild(msgEl);
-  
+}
+
+// Helper function to add message to container and apply text/options
+function addMessageToContainer(container, msgWrapperEl, text, msgEl, sender, options = null, animate = true) {  
   // Sofort leeres Element hinzufügen und anzeigen für schnelle UI-Reaktion
   container.appendChild(msgWrapperEl);
   scrollToBottom();
@@ -37,11 +100,11 @@ export function appendMessage(text, sender, options = null) {
   text = formatMessageText(text);
   
   // Implementiere inkrementelle Textanzeige für natürlichen Eindruck
-  if (sender === 'claude') {
-    // Schrittweise Textanzeige für Claude-Antworten
+  if (sender === 'claude' && animate) {
+    // Schrittweise Textanzeige für Claude-Antworten (nur wenn Animation aktiviert)
     animateText(text, msgEl);
   } else {
-    // Sofortige Anzeige für Benutzerinhalte
+    // Sofortige Anzeige für Benutzerinhalte oder bei deaktivierter Animation
     msgEl.innerHTML = text;
   }
   
@@ -99,11 +162,23 @@ export function showTyping() {
     avatarEl.appendChild(avatarImg);
     typingWrapper.appendChild(avatarEl);
     
+    // Create content wrapper
+    const contentWrapperEl = document.createElement('div');
+    contentWrapperEl.classList.add('bot-message-content');
+    
+    // Bot name element
+    const botNameEl = document.createElement('div');
+    botNameEl.classList.add('bot-name');
+    botNameEl.textContent = 'KIsela EVEnt - Ihr digitaler Anfragepilot';
+    contentWrapperEl.appendChild(botNameEl);
+    
     const typingEl = document.createElement('div');
     typingEl.id = 'typing-indicator';
     typingEl.classList.add('typing-indicator');
     typingEl.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
-    typingWrapper.appendChild(typingEl);
+    contentWrapperEl.appendChild(typingEl);
+    
+    typingWrapper.appendChild(contentWrapperEl);
     
     container.appendChild(typingWrapper);
     scrollToBottom();
@@ -128,37 +203,7 @@ function scrollToBottom() {
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-function formatMessageText(text) {
-  // Hervorhebungen (Fett) für wichtige Hinweise
-  text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  
-  // Zeilenumbrüche zu <br>
-  text = text.replace(/\n/g, '<br>');
-  
-  // Listen-Formatierung (Aufzählungspunkte mit Bindestrichen)
-  let inList = false;
-  const lines = text.split('<br>');
-  
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].trim().startsWith('- ')) {
-      if (!inList) {
-        lines[i] = '<ul><li>' + lines[i].substring(2) + '</li>';
-        inList = true;
-      } else {
-        lines[i] = '<li>' + lines[i].substring(2) + '</li>';
-      }
-    } else if (inList) {
-      lines[i - 1] += '</ul>';
-      inList = false;
-    }
-  }
-  
-  if (inList) {
-    lines[lines.length - 1] += '</ul>';
-  }
-  
-  return lines.join('<br>');
-}
+// formatMessageText function is now exported at the top of the file
 
 // Funktion für inkrementelle Textanzeige
 function animateText(text, element, speed = 10) {
@@ -228,9 +273,12 @@ function animateText(text, element, speed = 10) {
 
 // Platzhaltertext, der sofort angezeigt wird
 export function showPreemptiveResponse() {
+  const container = document.getElementById('messages');
   const msgWrapperEl = document.createElement('div');
   msgWrapperEl.classList.add('message-with-avatar');
   msgWrapperEl.id = 'preemptive-response-wrapper';
+  // Make sure it's not styled as a user message
+  msgWrapperEl.classList.remove('user-message');
   
   // Avatar für Preemptive Response
   const avatarEl = document.createElement('div');
@@ -241,9 +289,23 @@ export function showPreemptiveResponse() {
   avatarEl.appendChild(avatarImg);
   msgWrapperEl.appendChild(avatarEl);
   
+  // Create content wrapper to hold bot name and message
+  const contentWrapperEl = document.createElement('div');
+  contentWrapperEl.classList.add('bot-message-content');
+  
+  // Bot name element
+  const botNameEl = document.createElement('div');
+  botNameEl.classList.add('bot-name');
+  botNameEl.textContent = 'KIsela EVEnt - Ihr digitaler Anfragepilot';
+  contentWrapperEl.appendChild(botNameEl);
+  
   const msgEl = document.createElement('div');
   msgEl.id = 'preemptive-response';
   msgEl.classList.add('message', 'claude', 'preemptive');
+  contentWrapperEl.appendChild(msgEl);
+  
+  // Add the content wrapper to the message wrapper
+  msgWrapperEl.appendChild(contentWrapperEl);
   
   // Platzhaltertext mit Animationspunkten
   const typingContainer = document.createElement('div');
@@ -257,9 +319,11 @@ export function showPreemptiveResponse() {
   dots.innerHTML = '<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
   typingContainer.appendChild(dots);
   
-  msgWrapperEl.appendChild(msgEl);
+  // Clear any existing style that might be set
+  msgWrapperEl.style.flexDirection = '';
   
-  document.getElementById('messages').appendChild(msgWrapperEl);
+  // Append to the container
+  container.appendChild(msgWrapperEl);
   scrollToBottom();
   
   // Animation der Punkte starten
@@ -301,6 +365,10 @@ export function replacePreemptiveWithActual(text, options = null) {
   const preemptive = document.getElementById('preemptive-response');
   
   if (preemptive && preemptiveWrapper) {
+    // Ensure the wrapper has the correct styling
+    preemptiveWrapper.classList.remove('user-message');
+    preemptiveWrapper.style.flexDirection = '';
+    
     // Text formatieren (Zeilenumbrüche und Listen)
     const formattedText = formatMessageText(text);
     

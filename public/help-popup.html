@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hilfe - OsnabrückHalle Anfragepilot</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    :root {
+      --primary-color: #3DAE2B;       /* Hauptgrün / CI-Grün */
+      --secondary-color: #4AC235;     /* Helleres Grün */
+      --accent-color: #2A7A1E;        /* Dunkleres Grün */
+      --background-color: #ffffff;    /* Weiß als Hintergrund */
+      --text-color: #333333;
+      --light-text: #666666;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--background-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .help-header {
+      background-color: var(--primary-color); /* Now using CI-Grün */
+      color: white;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+    }
+    
+    .help-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px 30px 20px;
+    }
+    
+    h1 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+    
+    h2 {
+      color: var(--primary-color);
+      margin: 25px 0 15px 0;
+      font-size: 1.4rem;
+    }
+    
+    .section {
+      margin-bottom: 25px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .tips-list {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    
+    .tips-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .tips-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .tips-list li::before {
+      content: "→";
+      color: var(--primary-color); /* Now using CI-Grün */
+      font-weight: bold;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+    
+    .data-protection {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-left: 4px solid var(--primary-color); /* Now using CI-Grün */
+      margin: 20px 0;
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: white;
+      transition: transform 0.2s;
+    }
+    
+    .close-btn:hover {
+      transform: scale(1.2);
+    }
+    
+    a {
+      color: var(--primary-color); /* Now using CI-Grün */
+      text-decoration: none;
+    }
+    
+    a:hover {
+      color: var(--accent-color); /* Darker green on hover */
+      text-decoration: underline;
+    }
+    
+    .contact-info {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      background-color: var(--primary-color); /* Now using CI-Grün */
+      color: white;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      margin-left: 5px;
+    }
+    
+    @media (max-width: 600px) {
+      .help-header {
+        padding: 15px;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .section {
+        padding: 15px;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="help-header">
+    <h1>Hilfe zum Digitalen Anfragepiloten</h1>
+    <button id="close-help" class="close-btn" onclick="window.close()">&times;</button>
+  </div>
+  
+  <div class="help-container">
+    <div class="section">
+      <h2>Über den Anfragepiloten</h2>
+      <p>Der Digitale Anfragepilot der OsnabrückHalle unterstützt Sie bei der Planung Ihrer Veranstaltung. Er führt Sie interaktiv durch den Prozess und sammelt alle relevanten Informationen für Ihre Anfrage.</p>
+    </div>
+    
+    <div class="section">
+      <h2>So nutzen Sie den Anfragepiloten</h2>
+      <ul class="tips-list">
+        <li><strong>Freies Gespräch:</strong> Stellen Sie Ihre Fragen in natürlicher Sprache – wie in einem normalen Gespräch.</li>
+        <li><strong>Veranstaltungsdetails:</strong> Der Assistent wird Sie nach allen wichtigen Details für Ihre Veranstaltung fragen.</li>
+        <li><strong>Zusammenfassung:</strong> Am Ende erhalten Sie eine übersichtliche Zusammenfassung der erfassten Informationen.</li>
+        <li><strong>Anfrage absenden:</strong> Mit Ihrer Bestätigung wird die Anfrage an das Team der OsnabrückHalle übermittelt.</li>
+        <li><strong>Chat fortsetzen:</strong> Bei versehentlichem Schließen des Browsers können Sie innerhalb von 24 Stunden Ihre Konversation fortsetzen, wenn Sie zur Website zurückkehren.</li>
+        <li><strong>Chat zurücksetzen:</strong> Mit dem Reset-Button (🔄) rechts unten können Sie den Chat jederzeit neu starten.</li>
+      </ul>
+    </div>
+    
+    <div class="section">
+      <h2>Informationen, die Sie bereithalten sollten</h2>
+      <ul class="tips-list">
+        <li><strong>Art der Veranstaltung:</strong> Kongress, Tagung, Messe, Konzert, etc.</li>
+        <li><strong>Zeitraum:</strong> Gewünschtes Datum und Uhrzeiten</li>
+        <li><strong>Teilnehmeranzahl:</strong> Ungefähre Anzahl der erwarteten Teilnehmer</li>
+        <li><strong>Raumbedarf:</strong> Benötigte Räume und spezielle Ausstattung</li>
+        <li><strong>Catering:</strong> Wünsche zur Verpflegung</li>
+        <li><strong>Kontaktdaten:</strong> Ihre E-Mail-Adresse und Name für Rückfragen</li>
+      </ul>
+    </div>
+    
+    <div class="section data-protection">
+      <h2>Datenschutz &amp; Sicherheit <span class="badge">Wichtig</span></h2>
+      <p>Der Anfragepilot speichert Ihre Gesprächsdaten temporär für maximal 24 Stunden auf Ihrem Gerät (im Browser-Speicher), um Ihnen zu ermöglichen, einen unterbrochenen Dialog fortzusetzen. Diese Daten verlassen Ihr Gerät erst, wenn Sie die Anfrage absenden.</p>
+      
+      <p>Nach Absenden Ihrer Anfrage werden die Daten an die OsnabrückHalle übermittelt und gemäß unserer Datenschutzrichtlinien verarbeitet. Sie erhalten nach dem Absenden eine Kopie Ihrer Anfrage per E-Mail.</p>
+      
+      <p>Die übermittelten Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht an unbeteiligte Dritte weitergegeben. Sie können jederzeit die Löschung Ihrer Daten beantragen.</p>
+      
+      <p><strong>Wichtig:</strong> Bitte geben Sie keine sensiblen personenbezogenen Daten wie Passwörter, Kreditkarteninformationen, Personalausweisnummern oder Gesundheitsdaten ein.</p>
+      
+      <p>Mit dem Reset-Button (🔄) können Sie jederzeit alle lokalen Gesprächsdaten löschen.</p>
+      
+      <p>Weitere Informationen finden Sie in unserer <a href="https://www.osnabrueckhalle.de/datenschutz" target="_blank">Datenschutzerklärung</a>.</p>
+    </div>
+    
+    <div class="contact-info">
+      <h2>Kontakt</h2>
+      <p>Bei Fragen oder Problemen mit dem Anfragepiloten kontaktieren Sie uns gerne direkt:</p>
+      <p>
+        <strong>OsnabrückHalle</strong><br>
+        Schlosswall 1-9, 49074 Osnabrück<br>
+        Tel.: +49 541 3490991<br>
+        E-Mail: osnabrueckhalle@marketingosnabrueck.de
+      </p>
+    </div>
+  </div>
+  
+  <script>
+    // Schließen mit Escape-Taste ermöglichen
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        window.close();
+      }
+    });
+  </script>
+</body>
+</html>

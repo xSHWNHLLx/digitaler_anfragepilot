@@ -13,6 +13,12 @@ export async function sendMessage(messages, userId) {
     const typingEvent = new CustomEvent('typing:start');
     document.dispatchEvent(typingEvent);
     
+    // Prüfe, ob die Session noch gültig ist, bevor der API-Call erfolgt
+    const lastActivityTime = localStorage.getItem('inquiryLastActivity');
+    if (!lastActivityTime || (Date.now() - parseInt(lastActivityTime, 10) >= 24 * 60 * 60 * 1000)) {
+      throw new Error('Session ist abgelaufen. Bitte laden Sie die Seite neu.');
+    }
+    
     const res = await fetch('/api/claude', {
       method: 'POST',
       headers: { 
@@ -22,7 +28,9 @@ export async function sendMessage(messages, userId) {
         // Hinzufügen des API-Schlüssels für die Authentifizierung
         'Authorization': `Bearer ${API_CONFIG.API_KEY}`,
         // Client-ID für Token-Tracking
-        'X-Client-ID': API_CONFIG.CLIENT_ID
+        'X-Client-ID': API_CONFIG.CLIENT_ID,
+        // Session-Info hinzufügen
+        'X-Session-Start': localStorage.getItem('inquirySessionStart') || Date.now().toString()
       },
       body: JSON.stringify({ messages, userId })
     });

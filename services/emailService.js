@@ -117,14 +117,29 @@ async function sendInquiryEmail(formattedInquiry, contactEmail, contactName, opt
         subject: `Neue Veranstaltungsanfrage von ${contactName}`,
         text: `${formattedInquiry}\n\n--- Chat-Verlauf in HTML-Version verfügbar ---`,
         html: `
-          <div style="font-family: Arial, sans-serif;">
-            <h2 style="color: #3a5eb9;">Neue Veranstaltungsanfrage</h2>
-            <div style="background-color: #f5f7fa; padding: 20px; border-radius: 5px; border-left: 4px solid #3a5eb9; margin-bottom: 20px;">
-              <pre style="font-family: Arial, sans-serif; white-space: pre-wrap;">${formattedInquiry}</pre>
+          <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #ffffff; color: #333333; padding: 20px; max-width: 800px; margin: 0 auto;">
+            <div style="text-align: center; padding-bottom: 1rem; border-bottom: 1px solid #ddd;">
+              <h1 style="color: #3DAE2B; margin-bottom: 0.5rem;">Neue Veranstaltungsanfrage</h1>
+              <p style="color: #666666;">Digitaler Anfragepilot der OsnabrückHalle</p>
             </div>
-            ${chatHistory}
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
+            
+            <div style="margin-top: 1.5rem; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #3DAE2B;">
+              <h2 style="color: #3DAE2B; margin-bottom: 1rem; font-weight: 600;">Zusammenfassung der Anfrage</h2>
+              <div style="background-color: #f2f2f2; padding: 15px; border-radius: 12px; border-bottom-left-radius: 4px; border-left: 3px solid #e0e0e0; line-height: 1.6; margin-bottom: 1.5rem;">
+                <pre style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; white-space: pre-wrap; margin: 0;">${formattedInquiry}</pre>
+              </div>
+              
+              <div style="margin-top: 1.5rem;">
+                <h3 style="color: #3DAE2B; margin-bottom: 0.8rem; font-weight: 600;">Chat-Verlauf:</h3>
+                <div style="max-height: 500px; overflow-y: auto; border: 1px solid #eee; padding: 1rem; border-radius: 8px;">
+                  ${chatHistory}
+                </div>
+              </div>
+            </div>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; text-align: center; color: #666666; font-size: 0.8rem;">
               <p>Diese Anfrage wurde automatisch durch den Digitalen Anfragepiloten der OsnabrückHalle generiert.</p>
+              <p>OsnabrückHalle | Schlosswall 1-9, 49074 Osnabrück | Tel.: +49 541 3490991</p>
             </div>
           </div>
         `
@@ -137,22 +152,44 @@ async function sendInquiryEmail(formattedInquiry, contactEmail, contactName, opt
         subject: 'Ihre Veranstaltungsanfrage an die OsnabrückHalle wurde erfolgreich übermittelt',
         text: `Sehr geehrte(r) ${contactName},\n\nvielen Dank für Ihre Anfrage an die OsnabrückHalle. Wir haben Ihre Anfrage erhalten und werden uns in Kürze bei Ihnen melden.\n\nNachfolgend finden Sie eine Zusammenfassung Ihrer Anfrage:\n\n${formattedInquiry}\n\nMit freundlichen Grüßen,\nIhr Team der OsnabrückHalle\n\nOsnabrückHalle\nSchlosswall 1-9\n49074 Osnabrück\nTel.: 0541-323-4700\nE-Mail: osnabrueckhalle@marketingosnabrueck.de\nwww.osnabrueckhalle.de`,
         html: `
-          <div style="font-family: Arial, sans-serif;">
-            <h2 style="color: #3a5eb9;">Vielen Dank für Ihre Anfrage!</h2>
-            <p>Sehr geehrte(r) ${contactName},</p>
-            <p>vielen Dank für Ihre Anfrage an die OsnabrückHalle. Wir haben Ihre Anfrage erhalten und werden uns in Kürze bei Ihnen melden.</p>
-            <p>Nachfolgend finden Sie eine Zusammenfassung Ihrer Anfrage:</p>
-            <div style="background-color: #f5f7fa; padding: 15px; border-radius: 5px; border-left: 4px solid #3a5eb9;">
-              <pre style="font-family: Arial, sans-serif; white-space: pre-wrap;">${formattedInquiry}</pre>
+          <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #ffffff; color: #333333; padding: 20px; max-width: 800px; margin: 0 auto;">
+            <div style="text-align: center; padding-bottom: 1rem; border-bottom: 1px solid #ddd;">
+              <h1 style="color: #3DAE2B; margin-bottom: 0.5rem;">Digitaler Anfragepilot der OsnabrückHalle</h1>
+              <p style="color: #666666;">Für Veranstaltungen in unserem Event- und Kongresszentrum</p>
             </div>
-            <p>Mit freundlichen Grüßen,<br>Ihr Team der OsnabrückHalle</p>
-            <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #666;">
-              <p>OsnabrückHalle<br>
-              Schlosswall 1-9<br>
-              49074 Osnabrück<br>
-              Tel.: 0541-323-4700<br>
-              E-Mail: osnabrueckhalle@marketingosnabrueck.de<br>
-              <a href="https://www.osnabrueckhalle.de" style="color: #3a5eb9;">www.osnabrueckhalle.de</a></p>
+            
+            <div style="margin-top: 1.5rem; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+              <h2 style="color: #3DAE2B; margin-bottom: 1rem; font-weight: 600;">Vielen Dank für Ihre Anfrage!</h2>
+              
+              <div style="line-height: 1.6;">
+                <p>Sehr geehrte(r) ${contactName},</p>
+                <p>vielen Dank für Ihre Anfrage an die OsnabrückHalle. Wir haben Ihre Anfrage erhalten und werden uns in Kürze bei Ihnen melden.</p>
+                <p>Nachfolgend finden Sie eine Zusammenfassung Ihrer Anfrage:</p>
+              </div>
+              
+              <div style="background-color: #e8f5e6; padding: 1rem 1.2rem; border-radius: 12px; border-bottom-right-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); line-height: 1.6; margin: 1.5rem 0;">
+                <pre style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; white-space: pre-wrap; margin: 0;">${formattedInquiry}</pre>
+              </div>
+              
+              <div style="line-height: 1.6; margin-top: 1.5rem;">
+                <p>Mit freundlichen Grüßen,<br>Ihr Team der OsnabrückHalle</p>
+              </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #3DAE2B;">
+              <h3 style="color: #3DAE2B; margin-top: 0; margin-bottom: 0.8rem;">Kontakt</h3>
+              <p style="line-height: 1.6;">
+                <strong>OsnabrückHalle</strong><br>
+                Schlosswall 1-9<br>
+                49074 Osnabrück<br>
+                Tel.: 0541-323-4700<br>
+                E-Mail: <a href="mailto:osnabrueckhalle@marketingosnabrueck.de" style="color: #3DAE2B;">osnabrueckhalle@marketingosnabrueck.de</a><br>
+                <a href="https://www.osnabrueckhalle.de" style="color: #3DAE2B;">www.osnabrueckhalle.de</a>
+              </p>
+            </div>
+            
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; text-align: center; color: #666666; font-size: 0.8rem;">
+              <p>Diese E-Mail wurde automatisch durch den Digitalen Anfragepiloten der OsnabrückHalle generiert.</p>
             </div>
           </div>
         `
@@ -197,8 +234,21 @@ function generateInquirySummary(parsed) {
   // Wenn kein gültiges Objekt vorhanden ist, leere Zusammenfassung zurückgeben
   if (!parsed) return 'Keine Daten verfügbar';
 
+  // Falls kein Veranstaltungstitel angegeben wurde, generiere automatisch einen sinnvollen Titel
+  if (!parsed.eventTitle) {
+    if (parsed.eventType) {
+      parsed.eventTitle = `${parsed.eventType} in der OsnabrückHalle`;
+    } else if (parsed.organizerFirstName || parsed.organizerLastName) {
+      const name = `${parsed.organizerFirstName || ''} ${parsed.organizerLastName || ''}`.trim();
+      parsed.eventTitle = `Veranstaltung von ${name} in der OsnabrückHalle`;
+    } else {
+      const dateInfo = parsed.dateFrom || parsed.altDates?.[0] || '2025';
+      parsed.eventTitle = `Veranstaltung in der OsnabrückHalle am ${dateInfo}`;
+    }
+  }
+  
   // Veranstaltungstitel mit Fallback
-  const eventTitle = parsed.eventTitle || 'Kein Titel angegeben';
+  const eventTitle = parsed.eventTitle;
 
   // Datumsbereiche formatieren
   let dateInfo = 'Kein Datum angegeben';

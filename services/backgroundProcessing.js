@@ -218,7 +218,20 @@ async function extractAndProcessInBackground(internalMessages, hasContactInfo, s
       
       if (!parsed.eventTitle) {
         console.warn('⚠️ Kein Veranstaltungstitel gefunden');
-        return { success: false, reason: 'missing_title' };
+        // Fallback: Generiere einen Titel basierend auf den verfügbaren Informationen
+        if (parsed.eventType) {
+          parsed.eventTitle = `${parsed.eventType} in der OsnabrückHalle`;
+          console.log(`✅ Automatisch generierten Titel erstellt: "${parsed.eventTitle}"`);
+        } else if (parsed.organizerFirstName || parsed.organizerLastName) {
+          const name = `${parsed.organizerFirstName || ''} ${parsed.organizerLastName || ''}`.trim();
+          parsed.eventTitle = `Veranstaltung von ${name} in der OsnabrückHalle`;
+          console.log(`✅ Automatisch generierten Titel erstellt: "${parsed.eventTitle}"`);
+        } else {
+          // Letzte Fallback-Option mit Datum falls vorhanden
+          const dateInfo = parsed.dateFrom || parsed.altDates?.[0] || '2025';
+          parsed.eventTitle = `Veranstaltung in der OsnabrückHalle am ${dateInfo}`;
+          console.log(`✅ Automatisch generierten Titel erstellt: "${parsed.eventTitle}"`);
+        }
       }
       
       if (!parsed.eventType) {

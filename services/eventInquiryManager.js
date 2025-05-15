@@ -161,10 +161,26 @@ function formatInquiry(inquiryId) {
   if (!inquiry) return "Anfrage nicht gefunden";
   
   const data = inquiry.data;
+  
+  // Wenn kein Veranstaltungstitel vorhanden ist, erstelle einen sinnvollen
+  let veranstaltungstitel = data.veranstaltungstitel;
+  if (!veranstaltungstitel) {
+    if (data.veranstaltungsart) {
+      veranstaltungstitel = `${data.veranstaltungsart} in der OsnabrückHalle`;
+    } else if (data.veranstalter?.vorname || data.veranstalter?.nachname) {
+      const name = `${data.veranstalter?.vorname || ''} ${data.veranstalter?.nachname || ''}`.trim();
+      veranstaltungstitel = `Veranstaltung von ${name} in der OsnabrückHalle`;
+    } else {
+      const datum = data.datumVon || 'Geplanter Termin';
+      veranstaltungstitel = `Veranstaltung in der OsnabrückHalle am ${datum}`;
+    }
+    console.log(`✅ Fehlenden Veranstaltungstitel ergänzt: "${veranstaltungstitel}"`);
+  }
+  
   let formattedText = `
 VERANSTALTUNGSANFRAGE - OSNABRÜCKHALLE
 
-Veranstaltungstitel: ${data.veranstaltungstitel || '-'}
+Veranstaltungstitel: ${veranstaltungstitel || 'Neue Veranstaltung in der OsnabrückHalle'}
 Art der Veranstaltung: ${data.veranstaltungsart || '-'}
 Datum: ${data.datumVon || '-'} bis ${data.datumBis || '-'}
 Alternativtermine: ${data.alternativtermine || 'Keine angegeben'}

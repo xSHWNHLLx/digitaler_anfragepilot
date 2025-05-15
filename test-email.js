@@ -44,11 +44,29 @@ async function testEmail() {
       subject: 'Test E-Mail vom OsnabrückHalle Anfragepilot',
       text: 'Dies ist eine Test-E-Mail, um die SMTP-Konfiguration zu überprüfen.',
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
-          <h2 style="color: #3a5eb9;">Test E-Mail</h2>
-          <p>Dies ist eine Test-E-Mail, um die SMTP-Konfiguration zu überprüfen.</p>
-          <p>Wenn Sie diese E-Mail erhalten, funktioniert die E-Mail-Konfiguration korrekt!</p>
-          <p>Gesendet: ${new Date().toLocaleString()}</p>
+        <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #ffffff; color: #333333; padding: 20px; max-width: 800px; margin: 0 auto;">
+          <div style="text-align: center; padding-bottom: 1rem; border-bottom: 1px solid #ddd;">
+            <h1 style="color: #3DAE2B; margin-bottom: 0.5rem;">Digitaler Anfragepilot der OsnabrückHalle</h1>
+            <p style="color: #666666;">Test der E-Mail-Konfiguration</p>
+          </div>
+          
+          <div style="margin-top: 1.5rem; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+            <h2 style="color: #3DAE2B; margin-bottom: 1rem; font-weight: 600;">Test E-Mail</h2>
+            
+            <div style="background-color: #f2f2f2; padding: 1rem 1.2rem; border-radius: 12px; border-bottom-left-radius: 4px; border-left: 3px solid #e0e0e0; line-height: 1.6; margin: 1.5rem 0;">
+              <p>Dies ist eine Test-E-Mail, um die SMTP-Konfiguration zu überprüfen.</p>
+              <p>Wenn Sie diese E-Mail erhalten, funktioniert die E-Mail-Konfiguration korrekt!</p>
+            </div>
+            
+            <div style="padding: 0.8rem 1.2rem; margin-top: 1rem; background-color: #e8f5e6; border-radius: 12px; border-bottom-right-radius: 4px;">
+              <p><strong>Gesendet:</strong> ${new Date().toLocaleString('de-DE')}</p>
+            </div>
+          </div>
+          
+          <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; text-align: center; color: #666666; font-size: 0.8rem;">
+            <p>OsnabrückHalle | Schlosswall 1-9, 49074 Osnabrück | Tel.: +49 541 3490991</p>
+            <p>Diese Test-E-Mail wurde automatisch generiert.</p>
+          </div>
         </div>
       `
     });
